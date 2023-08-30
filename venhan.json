@@ -1,0 +1,103 @@
+{
+  "components": [
+    {
+      "name": "API gateway",
+      "icon": "aws-api-gateway",
+      "type": "gateway"
+    },
+    {
+      "name": "Lambda",
+      "icon": "aws-lambda",
+      "type": "function"
+    },
+    {
+      "name": "S3",
+      "icon": "aws-simple-storage-service",
+      "type": "storage"
+    },
+    {
+      "name": "VPC Subnet",
+      "icon": "aws-vpc",
+      "type": "subnet",
+      "children": [
+        {
+          "name": "Main Server",
+          "children": [
+            {
+              "name": "Server",
+              "icon": "aws-ec2",
+              "type": "server"
+            },
+            {
+              "name": "Data",
+              "icon": "aws-rds",
+              "type": "database"
+            }
+          ]
+        },
+        {
+          "name": "Queue",
+          "icon": "aws-auto-scaling",
+          "type": "queue"
+        },
+        {
+          "name": "Compute Nodes",
+          "color": "red",
+          "children": [
+            {
+              "name": "Worker1",
+              "icon": "aws-ec2",
+              "type": "worker"
+            },
+            {
+              "name": "Worker2",
+              "icon": "aws-ec2",
+              "type": "worker"
+            },
+            {
+              "name": "Worker3",
+              "icon": "aws-ec2",
+              "type": "worker"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "icon": "aws-redshift",
+      "type": "analytics"
+    }
+  ],
+  "connections": [
+    {
+      "from": "API gateway",
+      "to": "Lambda"
+    },
+    {
+      "from": "Lambda",
+      "to": "Server"
+    },
+    {
+      "from": "Server",
+      "to": "Data"
+    },
+    {
+      "from": "Server",
+      "to": "Queue"
+    },
+    {
+      "from": "Queue",
+      "to": ["Worker1", "Worker2", "Worker3"]
+    },
+    {
+      "from": "Data",
+      "to": "S3"
+    },
+    {
+      "from": "Compute Nodes",
+      "to": "Analytics"
+    }
+  ]
+}
+
